@@ -325,11 +325,12 @@ def pere(x):
 - Функция для перевода >10 систему счисления
 ```python
 from string import *
-alphabet = digits + ascii_uppercase + ascii_lowercase 
+os = 36 #основание
+alphabet = (digits + ascii_uppercase + ascii_lowercase)[:os]
 
 def pere(x):
     s=''
-    o = 36 #основание
+    o=36 #основание
     while x>0:
         s+= alphabet[x%o]
         x//= o
@@ -368,9 +369,29 @@ for x in al:
         if f%9==0: print(f/9)
 ```
 
-2. ???
+2. Матеметическое выражение:
 ```python
-#Дописать
+#КЕГЭ №23752
+from string import *
+
+def pere(x):
+   s=''
+   while x!=0:
+      s+=al[x%27]
+      x//=27
+   return s[::-1]
+
+c = 0
+al = (digits + ascii_uppercase)[:27]
+
+f = 2*2187**2020 + 729**2021 - 2*243**2022\
+    + 81**2023 - 2*27**2024 - 6561
+f = pere(f)
+
+for i in al[10:]:
+   c+= f.count(i)
+
+print(c)
 ```
 
 3. Система счисления больше 36-ой:
@@ -405,13 +426,92 @@ for x in digits:
 ! - Задание 15.4 (ШАБЛОНЫ ПРОГ.pdf) - ???
 1. Тип с координатной прямой:
 ![Законы](./screenshots/algLaws15.png)
-    Алгоритм:
+    Алгоритм Ручками:
     1.
     2.
     3.
-2. Тип 2
-3. Тип 3
-4. Тип 4
+```python
+```
+2. Поразрядная конъюнкция:
+```python
+def f(x, a):
+    p1 = x&1097==0
+    p2 = x&2047!=0
+    p3 = x&a!=0
+    return p1 <=(p2 <= p3) # выражение
+
+for a in range(1, 1000):
+    #массив со всеми значениями
+    s = [f(x, a) for x in range(1, 3000)]
+    #all всегда
+    if all(s): print(a); break
+```
+3. Координатная плоскость
+```python
+#РЕШУ ЕГЭ №13745
+def f(x, y):
+    p1 = (x<=9)
+    p2 = (x*x<=a)
+    p3 = (y*y<=a)
+    p4 = (y<=9)
+    return (p1 <= p2)and(p3<=p4)
+
+r = range(1, 500)
+for a in range(1, 500):
+    ls = [f(x, y) for x in range(1, 1_000) for y in range(1, 1_000)]
+    if all(ls): ans.append(a)
+
+print(max(ans))
+```
+4. Разное
+```python
+#КЕГЭ №14658
+def ddel(x, xx):
+    return x%xx==0
+
+def f(x, a):
+    p1 = ddel(x ,12)
+    p2 = not(ddel(x, 42))
+    p3 = (x+a)>=4096
+
+    return (p1 <= p2) or p3
+
+for a in range(1, 10_000):
+    s = [f(x, a) for x in range(1, 10_000)]
+
+    if all(s): print(a);break
+```
+```python
+#КЕГЭ №1345
+def f(x):
+    p1 = not(x%3==0)
+    p2 = x not in [48, 52, 56]
+    p3 = abs(x-50)<=7
+    p4 = 29<=x<=47
+    p5 = x&a==0
+
+    return ((p1 and p2) <= (p3<=p4) or p5)
+
+for a in range(1, 1_000):
+    s = [f(x) for x in range(1, 1_000)]
+    if all(s): print(a); break
+```
+```python
+#КЕГЭ №5368
+def pod(n, m):
+    return n%m==0
+
+def f(x):
+    p1 =pod(x, 17)
+    p2 = not(pod(x, 53))
+    p3 = not(a<90_000_000-x)
+
+    return ((p1 <= p2) or p3)
+
+for a in range(90_000_000, 1, -1):
+    s = [f(x) for x in range(1, 100_000)]
+    if all(s): print(a)
+```
 <br>
 
 
@@ -499,7 +599,7 @@ for a in ls:
         pre = min(pre, a)
 
 for i in range(len(ls)-1):
-    s = [ls[i], ls[i+1]]
+    s = ls[i:i+2]
     cc = 0
     
     for a in s:
@@ -636,9 +736,10 @@ def is_prime(x):
 def dels(x):
 	se = set()
 	for i in range(1, int(x**0.5)+1):
-		se.add(i)
-		se.add(x//i)		
-	return mn
+		if x%i==0:
+            se.add(i)
+            se.add(x//i)		
+	return se
 ```
 
 #### **Примеры:**
