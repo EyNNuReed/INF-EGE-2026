@@ -96,7 +96,7 @@ for x, y, w, z in product(range(2), repeat=4):
 <h100>[Навигация](#navigation)</h100>
 
 ```
-=впр(ячейка; диапазон; ячейка выводах; 0) 
+=впр(ячейка; диапазон; ячейка выводах; 0)
 
 #четвёртый параметр отвечает за приблизительное значение(0-нет, 1-да)
 #так как ответ должен ТОЧНЫМ ВСЕГДА 0!!!!!
@@ -142,7 +142,7 @@ def p(x):
 ```
 
 **Пример программы:**
-```python 
+```python
 def p(x):
     s =''
     while x!=0:
@@ -152,7 +152,7 @@ def p(x):
 
 def f(x):
     xx = p(x)
-    
+
     if x%3==0: xx = '1'+xx+'02'
     else: xx+= p((x%3)*4)
 
@@ -201,8 +201,8 @@ Python: - ???
 from itertools import product
 с = 0
 for i in product('КЛЕЙ', repeat=6):  #(алфавит, длина строки)
-	i = ''.join(i)  #первращаем tuple в строку 
-	if i.count('Й') <= 1:  #условие 
+	i = ''.join(i)  #первращаем tuple в строку
+	if i.count('Й') <= 1:  #условие
 		if i[0] != 'Й' and i[-1] != 'Й':
 			if i.count('ЕЙ')==0 and i.count('ЙЕ')==0:
 				c += 1
@@ -220,7 +220,7 @@ for i1 in 'ДГШ':
                     f=i1+i2+i3+i4+i5
                     c+=1
 print(c)
-``` 
+```
 <br>
 
 
@@ -248,7 +248,7 @@ for s in open('9.txt'):
         elif ls.count(a)==2: lp.append(a)
         else: ln.append(a)
 
-    if len(set(lp))==2 and len(lp)==5: 
+    if len(set(lp))==2 and len(lp)==5:
         p2 = 1 if max(lp)>max(ln) else 0
         if p2: c+=1
 print(c)
@@ -311,7 +311,7 @@ Exel: - ??? \
 from string import *
 alphabet = (digits + ascii_uppercase + ascii_lowercase)[:основание]  #строка
 #или
-alphabet = sorted('0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm')[:основание] #массив 
+alphabet = sorted('0123456789QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm')[:основание] #массив
 ```
 - Функция перевода для 3,4,5,6,7,9 системы счисления:
 ```python
@@ -352,7 +352,7 @@ def todec(x:str): #перевод в 10-тиричную
 ```python
 xx = bin(x)[2:] #перевод двоичную
 xx = oct(x)[2:] #перевод в восмиричную
-xx = hex(x)[2:] #перевод в шеснацетиричную 
+xx = hex(x)[2:] #перевод в шеснацетиричную
 
 sy = 2 #система счисления
 int(x, sy) #переаод из в десятичную из системы счисления<=36
@@ -530,7 +530,7 @@ def f(n):
     if n<20: return n
     else: return (n-6)*f(n-7)
 
-print((f(47872)-290*f(47865))/f(47858)) 
+print((f(47872)-290*f(47865))/f(47858))
 ```
 
 2. Через lru_cache:
@@ -550,7 +550,7 @@ c=0
 for n in range(4*10**7, 9*10**7 + 1):
     s = f(n)
     if s == 0: c+=1
-print(c) 
+print(c)
  ```
 
 3. Универсальный, через массивы:
@@ -601,7 +601,7 @@ for a in ls:
 for i in range(len(ls)-1):
     s = ls[i:i+2]
     cc = 0
-    
+
     for a in s:
         if a > 9 and a < 100: cc+=1
 
@@ -668,7 +668,7 @@ return any(h) if m%2!=0 else any(h)
 ```python
 return all(h) if m%2!=0 else any(h)
 #и в условиях ответа идём от обратного
-``` 
+```
 
 <br>
 
@@ -688,7 +688,7 @@ return all(h) if m%2!=0 else any(h)
 
 <h100>[Навигация](#navigation)</h100>
 
-1. Код:
+Шаблон:
 ```python
 from sys import setrecursionlimit
 setrecursionlimit(5000)
@@ -698,14 +698,11 @@ def f(x: int, y: int):
 	if x == y: return 1  #обязательно
 	if x == 'избегающее число': return 0
 	if x<y: return f(x+1, y) + f(2*x+1, y) #складывание вариантов f(команда_испольнителя ,y)
-        
+
     print(f('начальное_число', 'обязательное_число') * f('обязательное_число', 'конечное_число'))
 
 ```
-
-2. Ручками - ???
 <br>
-
 
 <a name="number24">
     <h2>Задание 24(ВУ)(18 мин)</h2>
@@ -713,8 +710,52 @@ def f(x: int, y: int):
 
 <h100>[Навигация](#navigation)</h100>
 
-<br>
+1. Метод вложенный циклов:
+```python
+m = 0
+for l in range(len(s)): #левая граница
+    for r in range(l+m, len(s)): #правая граница
+        c = s[l:r+1] #срез по границам
+```
+```python
+s = open('1.txt').readline()
 
+m = 0
+for l in range(len(s)):
+    for r in range(l+m, len(s)):
+        c = s[l:r+1]
+
+        if c.count('C')>2 or c.count('D')>2: #условие для оптимизации
+            break
+        if c.count('C')<=2 and c.count('D')<=2: #условие задания
+            m = max(m, len(c))
+
+print(m)
+```
+2. Метод вложенный циклов (для минимума):
+```python
+m = 1000 #начальное число
+for l in range(len(s)):
+    for r in range(l+m, l, -1):
+        c = s[l:r+1]
+```
+```python
+s = open('24_9169.txt').readline()
+
+m = 1000 #начальное число
+for l in range(len(s)):
+    for r in range(l+m, l, -1):
+        c = s[l:r+1]
+
+        if (c.count("BAD")+c.count("FAT"))>3:
+            break
+        if (c.count("BAD")+c.count("FAT"))==3:
+            m = min(m, len(c))
+print(m)
+```
+3. Регулярки
+```python
+```
 
 <a name="number25">
     <h2>Задание 25(ВУ)(20 мин)</h2>
@@ -724,11 +765,11 @@ def f(x: int, y: int):
 
 - Фукция нахождения простого числа:
 ```python
-def is_prime(x):  
-	if x <= 1: return False 
-	for i in range(2, int(x**0.5) + 1):  
+def is_prime(x):
+	if x <= 1: return False
+	for i in range(2, int(x**0.5) + 1):
 		if x % i == 0:
-			return False  	
+			return False
     return True
 ```
 - Фукция нахождения множества делителей
@@ -738,7 +779,7 @@ def dels(x):
 	for i in range(1, int(x**0.5)+1):
 		if x%i==0:
             se.add(i)
-            se.add(x//i)		
+            se.add(x//i)
 	return se
 ```
 
@@ -799,7 +840,7 @@ def f(n):
 	if n > 1: return f(n - 1) - 2*g(n - 1)
 ```
 >    Следует использовать когда:
->    - Функции, которые выполняются многократно или долго. 
+>    - Функции, которые выполняются многократно или долго.
 >    - Функции, которые часто вызываются с одними и теми же аргументами.
 >    - Функции, которые требуют больших вычислительных затрат.
 3. алфавит из string
@@ -842,7 +883,7 @@ for i in product("01234567", repeat=5):
 	print(i__class__) #tuple с симолами
 
 	i = i.''join(i)
-	print(i.__class__) #строка 
+	print(i.__class__) #строка
 ```
 2. **combinations** - ???
 3. **permutations** - ???
@@ -941,7 +982,7 @@ def pere(x):
 - Функция перевода в систему счисления >10:
 ```python
 from string import *
-alphabet = digits + ascii_uppercase + ascii_lowercase 
+alphabet = digits + ascii_uppercase + ascii_lowercase
 
 def pere(x):
     s=''
@@ -965,12 +1006,12 @@ def todec(x:str): #для с основанием >36
 ```
 - Функция нахождения простого числа:
 ```python
-def is_prime(x):  
-	if x <= 1: return False 
-    	
-	for i in range(2, int(x**0.5) + 1):  
+def is_prime(x):
+	if x <= 1: return False
+
+	for i in range(2, int(x**0.5) + 1):
 		if x % i == 0:
-			return False   	
+			return False
     return True
 ```
 
@@ -979,7 +1020,7 @@ def is_prime(x):
 def dels(x):
 	se = set()
 	for i in range(1, int(x**0.5)+1):
-		se.add(i); se.add(x//i)	
+		se.add(i); se.add(x//i)
 	return mn
 ```
 
