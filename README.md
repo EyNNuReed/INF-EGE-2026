@@ -44,8 +44,9 @@
 <h100>[Навигация](#navigation)</h100>
 
 1. Расписываем кол-во соседей для каждой вершины в таблице
-2. Ищем уникальные и расписывае
+2. Ищем уникальные и расписываеv все остальные относительно них
 3. Если уникальных нет то берём любую точку и расписываем все возможные варианты
+![Пример решения](./screenshots/numer1.png)
 <br>
 
 
@@ -136,8 +137,8 @@ for x, y, w, z in product(range(2), repeat=4):
 def p(x):
     s =''
     while x!=0:
-        s+=str(x%3)
-        x//=3
+        s+=str(x%'основание')
+        x//='основание'
     return s[::-1]
 ```
 
@@ -154,7 +155,7 @@ def f(x):
     xx = p(x)
 
     if x%3==0: xx = '1'+xx+'02'
-    else: xx+= p((x%3)*4)
+    else: xx= xx + p((x%3)*4)
 
     return int(xx, 3)
 
@@ -171,10 +172,7 @@ for n in range(10_000):
 </a>
 
 <h100>[Навигация](#navigation)</h100>
-
-
-Кумир: - ??? \
-Python: - ???
+Решается в кумире либо ручками
 <br>
 
 
@@ -261,8 +259,7 @@ print(c)
 </a>
 
 <h100>[Навигация](#navigation)</h100>
-
-
+Решается в ворде
 <br>
 
 
@@ -271,9 +268,10 @@ print(c)
 </a>
 
 <h100>[Навигация](#navigation)</h100>
-
-
-Формулы: - ???
+Формулы:
+![Пример решения](./screenshots/number_11_formuli.png)
+Пример:
+![Пример решения](./screenshots/number_11.png)
 <br>
 
 
@@ -282,19 +280,14 @@ print(c)
 </a>
 
 <h100>[Навигация](#navigation)</h100>
-
-
+Решается руками
 <br>
-
 
 <a name="number13">
     <h2>Задание 13(ПУ)(3 мин)</h2>
 </a>
 
 <h100>[Навигация](#navigation)</h100>
-
-
-Exel: - ??? \
 Код: - ???
 <br>
 
@@ -335,18 +328,6 @@ def pere(x):
         s+= alphabet[x%o]
         x//= o
     return s[::-1]
-```
-- Функция для перевода из системы >36:
-```python
-from string import *
-alphabet = (digits + ascii_uppercase + ascii_lowercase)
-
-def todec(x:str): #перевод в 10-тиричную
-   x = x[::-1]; os = 42
-   ans = 0
-   for a in range(0, len(x)):
-      ans+= al.index(x[a])*os**a
-   return ans
 ```
 - Базовые функции:
 ```python
@@ -422,16 +403,13 @@ for x in digits:
 </a>
 
 <h100>[Навигация](#navigation)</h100>
-
-! - Задание 15.4 (ШАБЛОНЫ ПРОГ.pdf) - ???
 1. Тип с координатной прямой:
 ![Законы](./screenshots/algLaws15.png)
     Алгоритм Ручками:
-    1.
-    2.
-    3.
-```python
-```
+    1.1  Раскрыть функцию по законам
+    1.2  Расписать отрезки
+    1.3 Подставить 0/1 в соответсвии с отрезком
+    1.4 Посчитать длинну в соответствии с заданием
 2. Поразрядная конъюнкция:
 ```python
 def f(x, a):
@@ -581,34 +559,70 @@ ls = [int(x) for x in open("17.txt")] #чтение файла
 #два идущих подряд элемента последовательности
 for x in range(len(ls)-1):
     s = [ls[i], ls[i+1]]
+    #или
+    s = ls[i:i+2]
 
 #два различных элемента последовательности
 for x in range(len(ls)-1):
 	for y in range(x+1, len(ls)):
 		s = [ls[x], ls[y]]
 ```
-<br>
-
-**Пример программы**:
+**Примеры программ**:
 ```python
+#КЕГЭ - 23757
 ls = [int(x) for x in open("23757.txt")]
-pre = 100_001; c = 0; ma = -1
+pre = 10**100; c = 0; ma = -10**100
 
 for a in ls:
-    if a > 9 and a < 100:
+    if 9<a<100:
         pre = min(pre, a)
 
 for i in range(len(ls)-1):
-    s = ls[i:i+2]
+    s = [ls[i], ls[i+1]]
     cc = 0
 
     for a in s:
-        if a > 9 and a < 100: cc+=1
+        if 9<a<100: cc+=1
 
-    if cc ==1 and sum(s)%pre==0:
+    if cc == 1 and sum(s)%pre==0:
         c+=1; ma = max(ma, sum(s))
 
 print(c, ma)
+```
+```python
+#КЕГЭ 14653
+ls = [int(x) for x in open('17.txt')]
+mi = 10**100; pre2 = -10**100; c = 0 #инициализируем переменые большими числами
+                                     #чтоб навереняка сработало
+
+
+ls1 = [x for x in ls if (abs(x)%17==0 and x>0)]; ls1.sort()
+pre1 =  ls1[0] + ls1[1] #сумма двух минимальных положительных
+                        #элементов последовательности кратных 17
+
+
+for a in ls:
+    if abs(a)%100 == 69:
+        pre2 = max(pre2, a) #максимальный элемент последовательности, оканчивающийся на 69
+
+
+for i in range(len(ls)-3):
+    s = ls[i:i+4]
+
+    ccc2 = 1; ccc1 = ccc3 = 0
+    cc1 = cc2 = 0
+
+    for a in s:
+        if 99<abs(a)<1_000: cc1+=1 #кол-во трёхзначных чисел
+        if abs(a)%18==0: cc2+=1 #кол-во ичсел кратных 18
+        ccc1 += a #сумма четвёрки
+        ccc2 *= a #произаедение элементов
+
+    if cc1 == 2 and cc2 == 1 and\
+       ccc1%pre1==0 and ccc2<=pre2**2:
+        c+=1;  mi = min(mi, ccc1**2)
+
+print(c, mi)
 ```
 <br>
 
@@ -618,7 +632,7 @@ print(c, ma)
 </a>
 
 <h100>[Навигация](#navigation)</h100>
-
+Решается не кодом, в exel (анлак)
 <br>
 
 
@@ -664,12 +678,6 @@ print('21)', [s for s in r if (not(f(с, s, 2)) and f(с, s, 4))])
 #поледний return меняется ТОЛЬКО для номера с неудачным ходом
 return any(h) if m%2!=0 else any(h)
 ```
-- !!! Если условие пройгрыша:
-```python
-return all(h) if m%2!=0 else any(h)
-#и в условиях ответа идём от обратного
-```
-
 <br>
 
 
@@ -678,7 +686,7 @@ return all(h) if m%2!=0 else any(h)
 </a>
 
 <h100>[Навигация](#navigation)</h100>
-
+Решается не кодом, в exel (анлак)
 <br>
 
 
@@ -754,8 +762,58 @@ for l in range(len(s)):
 print(m)
 ```
 3. Регулярки
+Символы:
+[ABC] - один из символов A, B или С
+[A-Z] - один из символов от A до Z
+[^CDE] - не C, не D, не T
+<br>
+Кол-во символов:
+{3} - ровно три символа
+{4, 8} - от 4 до 8
+"*" - ноль повторений или больше
+"+" - один повторений или больше
+<br>
+Перечисления:
+AB|CD|DE - AB или CD или DE
+<br>
+Групировка:
+(  ) - запоминающая групиировка
+(?:  ) - незапоминающая группировка
+<br>
+Основное:
+(?=( регулярка )) - для перебора каждого символа
+
 ```python
+#КЕГЭ 26551
+from re import findall
+
+s = open('24.txt').readline()
+pat = r"(?=(  [1-9ABCD][0-9ABCD]*[02468AC]  ))".replace(' ', '') #регулярка под число
+# [1-9ABCD] - цифра от 1 до D
+# [0-9ABCD]* - цифры от 0 до D >=0 раз
+# [02468AC] - чётная цифра
+ma = -1
+
+for i in findall(pat, s):
+    ma = max(len(i), ma)
+print(ma)
 ```
+```python
+#КЕГЭ 20813
+from re import findall
+
+s = open('24.txt').readline()
+pat = r"(?=(  (?:[789][0789]*|0) (?:[-*] (?:[789][0789]*|0) )+  ))".replace(' ', '')
+# (?:[789][0789]*|0) - число либо 0
+# (?:[-*] (?:[789][0789]*|0) )+ - знак+число >=1 раз
+ma = -1
+
+for a in findall(pat, s):
+    ma = max(len(a), ma)
+
+print(ma)
+```
+<br>
 
 <a name="number25">
     <h2>Задание 25(ВУ)(20 мин)</h2>
@@ -766,45 +824,174 @@ print(m)
 - Фукция нахождения простого числа:
 ```python
 def is_prime(x):
-	if x <= 1: return False
-	for i in range(2, int(x**0.5) + 1):
-		if x % i == 0:
-			return False
-    return True
+	for a in range(2, int(x**0.5) + 1):
+		if x%a==0:return False
+	return True
 ```
 - Фукция нахождения множества делителей
 ```python
 def dels(x):
 	se = set()
-	for i in range(1, int(x**0.5)+1):
-		if x%i==0:
-            se.add(i)
-            se.add(x//i)
+	for d in range(1, int(x**0.5)+1):
+		if x%d==0:
+        se.add(d); se.add(x//d)
 	return se
 ```
 
 #### **Примеры:**
-1. База:
+1. Маски:
 ```python
 from fnmatch import fnmatch
 
 for i in range(0, 10**10, 'число на которое должно делиться'):
 	if fnmatch(str(i), "переписанная маска"):
 		print(i, i//'число на которое должно делиться')
+```
+```python
+#РЕШУ ЕГЭ 55821
+from fnmatch import fnmatch
+for i in range(0, 10**8+1, 273):
+    if fnmatch(str(i), "12??36*1"):
+        print(i, i//273)
+```
+```python
+#КЕГЭ 22432
+from fnmatch import fnmatch
+for i in range(84318, 10**12+1, 84318):
+    x = str(i)
+    if fnmatch(x,"5*7?") and len(set(x))==len(x):
+        print(i, i//84318)
+```
+2. Делители
+```python
+#КЕГЭ 26557
+def prime(x): #Фукция нахождения простого числа
+    for a in range(2, int(x**0.5)+1):
+        if x%a==0: return False
+    return True
 
+def dells(x): #Фукция нахождения множества делителей
+    se = set()
+    for d in range(2, int(x**0.5)+1):
+        if x%d==0:
+            dd = x//d
+            if prime(d): se.add(d) #проверяем простое личисло
+            if prime(dd): se.add(dd) #проверяем простое личисло
+
+    return se if se else 0 #если делителей нет, то равно нулю
+
+
+k = 0
+for i in range(7_800_000+1, 10_000_000):
+    m = dells(i)
+
+    if m!=0:
+        m1 = len(m) #кол-во простых делителей
+        M = max(m)+min(m)
+
+    if k == 5: break #
+
+    if M%100==63 and M%m1==0:
+        print(i, M)
+        k += 1
 ```
-2. Сложно - ???
-```
-# Дописать
-```
+> Ответ:
+> 7800610 780063
+> 7801042 8463
+> 7801312 1863
+> 7801916 8163
+> 7802032 69663
 <br>
-
+3. Несколько простых - ???
 
 <a name="number26">
     <h2>Задание 26(ВУ)(35 мин)</h2>
 </a>
 
 <h100>[Навигация](#navigation)</h100>
+
+1. Системный администратор
+> Номер РЕШУ ЕГЭ - 27423
+```python
+S = 8200; N = 970
+ls = [int(x) for x in open('263.txt')]
+ls.sort() #сортируем, чтоб было легче
+
+su = 0 #сумма для ответа 1
+ans1 = 0 #количество для ответа 1
+
+#прохидимся и считаем ответ 1
+for i in range(N):
+    if su + ls[i] <= S: #проверяем, чтоб сумма помещалась на диск
+        su += ls[i]
+        ans1 += 1 #количество файлов
+        max_v = ls[i] #максимальный объём файла
+
+free_space = S - su #вычисляем сколько места осталось
+pot_max_v = free_space + max_v #вычисляем примерный объём наибольшего файла
+
+for i in range(N):
+    if ls[i] > pot_max_v: #если файл больше, то берём предыдущий
+        ans2 = ls[i-1]
+
+print(ans1, ans2)
+```
+> Ответ: 568, 50
+
+2. Грузы
+3. Модификации
+> Номера по типу (РЕШУ ЕГЭ - 38960) лучше решать в exel ручками
+4. Лёгкая матрёшка
+> Номер РЕШУ ЕГЭ - 48447
+
+Начнём со 2-го ответа, т.к. легче найти
+```python
+#Ответ 2
+N = 10000;
+ls = [int(x) for x in open('262.txt')]
+ls.sort(reverse =  True) #разворачиваем список
+
+curr = ls[0] #число от которого будем оталкиваться
+ans2 = 1 #макс кол-во контейнеров
+
+for i in range(1, N): #идём от 1, т.к. curr
+    if curr - ls[i] >= 5: #условие вложения
+        curr = ls[i] #сдвигаем curr
+        ans2+=1 #нашли подходящий блок -> +1
+
+print(ans2)
+```
+```python
+#Ответ 1
+N = 10000; ans2 = 1767
+ls = [int(x) for x in open('262.txt')]
+ls.sort(reverse =  True)
+
+ans1 = 0
+banned = [] #индексы контейнеров, которые уже упакованы
+
+while True:
+    for i in range(0, N): #находим curr для N-прохода
+        if banned.count(i) == 0: #проверяем нет взят ли индекс контейнера
+            curr = ls[i] #находим точку входа, баним и выходимы
+            banned.append(i)
+            break
+
+    for i in range(1, N): #(улучшенный код ответа 2)
+        if banned.count(i) == 0: #проверяем нет взят ли индекс контейнера
+            if (curr - ls[i])>=5:
+                curr = ls[i]
+                banned.append(i)
+    ans1 +=1
+
+    if len(banned) == N: #когда всё перебанили выходим из while
+        break
+
+print(ans1)
+```
+> Ответ: 17, 1767
+5. Средняя матрёшка
+6. Сложная матрёшка
 
 <br>
 
@@ -848,13 +1035,13 @@ def f(n):
 from string import *
 
 end = 16 #система счисления 16
-s = (digits + ascii_uppercase + ascii_uppercase)[:end]
+s = (digits + ascii_uppercase + ascii_lowercase)[:end]
 # s - алфавит с основанием 16
 ```
 >1. digits - все числа
 >2. ascii_uppercase - все заглавные буквы
 >3. ascii_lowercase - все строчные буквы
-4. enumerate - добавляет автоматический счётчик к елементам, возвращая пару число, значение
+4. enumerate - добавляет автоматический счётчик к елементам, возвращая пару-число, значение
 ```python
 numbs = [150, 160, 170]
 for index, num in enumerate(numbs, 2):
